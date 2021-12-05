@@ -263,6 +263,7 @@
     <Content Include="Views\Asset\Delete.cshtml" />
     <Content Include="Views\Asset\Details.cshtml" />
     <Content Include="Views\Asset\Edit.cshtml" />
+    <Content Include="Views\Organization\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyOrganization.Models.Organization>
+﻿@model MyOrganization.Models.Organization
 
 @{
     ViewBag.Title = "Index";
@@ -22,24 +22,22 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(model => model.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(model => model.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address)
+            @Html.DisplayFor(model => model.Address)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=Model.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=Model.ID })
         </td>
     </tr>
-}
+
 
 </table>

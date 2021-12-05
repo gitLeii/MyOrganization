@@ -12,9 +12,10 @@ namespace MyOrganization.Controllers
         private OrgContext db = new OrgContext();
 
         // GET: Organization
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.Organizations.ToList());
+            Organization organization = db.Organizations.Find(id);
+            return View(organization);
         }
 
         // GET: Organization/Details/5
