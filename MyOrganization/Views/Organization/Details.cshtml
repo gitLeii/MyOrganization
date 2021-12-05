@@ -1,0 +1,110 @@
+﻿@model MyOrganization.Models.Organization
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Organization</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Employees)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Emloyee Name</th>
+                    <th>Employment Type</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var item in Model.Employees)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "../Employee/Edit", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("Details", "../Employee/Details", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("Delete", "../Employee/Delete", new { id = item.EmployeeID })
+                </td>
+            </tr>
+                }
+            </table>
+            <p>@Html.ActionLink("Add Employee", "../Employee/Create", new { id= Model.ID})</p>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Assets)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Asset Name</th>
+                    <th></th>
+                    <th></th>
+                    <th>Amount</th>
+                    <th></th>
+                    <th></th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var item in Model.Assets)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @Html.ActionLink("Edit", "../Asset/Edit", new { id = item.AssetID}) |
+                            @Html.ActionLink("Details", "../Asset/Details", new { id = item.AssetID }) |
+                            @Html.ActionLink("Delete", "../Asset/Delete", new { id = item.AssetID })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <p>
+                @Html.ActionLink("Add Asset", "../Asset/Create", new {id = Model.ID})
+            </p>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) 
+    @Html.ActionLink("Back to List", "Index")
+</p>
