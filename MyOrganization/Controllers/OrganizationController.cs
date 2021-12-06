@@ -64,7 +64,7 @@ namespace MyOrganization.Controllers
                 }
                 db.Organizations.Add(organization);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = organization.ID });
             }
             return View(organization);
         }
@@ -95,6 +95,7 @@ namespace MyOrganization.Controllers
             {
                 var checkProfile = from p in db.Organizations
                                    where p.Name == organization.Name
+                                   && p.ID != organization.ID
                                    select p;
 
                 if (checkProfile.FirstOrDefault() != null)
@@ -104,7 +105,7 @@ namespace MyOrganization.Controllers
                 }
                 db.Entry(organization).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = organization.ID });
             }
             return View(organization);
         }
