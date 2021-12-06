@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MyOrganization.Controllers
 {
+    [Authorize]
     public class OrganizationController : Controller
     {
         private OrgContext db = new OrgContext();
@@ -16,6 +17,10 @@ namespace MyOrganization.Controllers
         {
             Organization organization = db.Organizations.Find(id);
             return View(organization);
+        }
+        public ActionResult List()
+        {
+            return View(db.Organizations.ToList());
         }
 
         // GET: Organization/Details/5

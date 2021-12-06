@@ -36,10 +36,10 @@
         @Html.DisplayFor(modelItem => item.Name)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Organization.Name)
+        @Html.DisplayFor(modelItem => item.Email)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Email)
+        @Html.DisplayFor(modelItem => item.Organization.Name)
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |

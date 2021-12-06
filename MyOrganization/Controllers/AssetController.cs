@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MyOrganization.Controllers
 {
+    [Authorize]
     public class AssetController : Controller
     {
         private OrgContext db = new OrgContext();

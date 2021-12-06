@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MyOrganization.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private OrgContext db = new OrgContext();

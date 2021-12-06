@@ -79,6 +79,14 @@ namespace MyOrganization.Controllers
             var user = (from c in db.Employees
                         where c.Email == model.Email
                         select c).ToList();
+            if (model.Email == "demo@demo.com")
+            {
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToAction("List", "Organization");
+                }
+            }
             switch (result)
             {
                 case SignInStatus.Success:
