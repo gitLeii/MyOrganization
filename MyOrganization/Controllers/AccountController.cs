@@ -82,7 +82,11 @@ namespace MyOrganization.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "Organization", new { id = user[0].OrganizationID });
+                    if (user[0].Email == model.Email)
+                    {
+                        return RedirectToAction("Index", "Organization", new { id = user[0].OrganizationID });
+                    }
+                    return RedirectToAction("Login");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
