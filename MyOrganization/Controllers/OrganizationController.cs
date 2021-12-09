@@ -10,11 +10,18 @@ namespace MyOrganization.Controllers
     public class OrganizationController : Controller
     {
         private OrgContext db = new OrgContext();
-
         // GET: Organization
         public ActionResult Index(int? id)
         {
             Organization organization = db.Organizations.Find(id);
+
+            var userValidation = (int)Session["ID"];
+            if (userValidation != organization.ID)
+            {
+                Session["ID"] = null;
+                return RedirectToAction("Login", "Account");
+            }
+
             return View(organization);
         }
 
@@ -26,6 +33,12 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organization organization = db.Organizations.Find(id);
+            var userValidation = (int)Session["ID"];
+            if (userValidation != organization.ID)
+            {
+                Session["ID"] = null;
+                return RedirectToAction("Login", "Account");
+            }
 
             if (organization == null)
             {
@@ -48,6 +61,12 @@ namespace MyOrganization.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userValidation = (int)Session["ID"];
+                if (userValidation != organization.ID)
+                {
+                    Session["ID"] = null;
+                    return RedirectToAction("Login", "Account");
+                }
                 var checkProfile = from p in db.Organizations
                                    where p.Name == organization.Name
                                    select p;
@@ -88,6 +107,12 @@ namespace MyOrganization.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userValidation = (int)Session["ID"];
+                if (userValidation != organization.ID)
+                {
+                    Session["ID"] = null;
+                    return RedirectToAction("Login", "Account");
+                }
                 var checkProfile = from p in db.Organizations
                                    where p.Name == organization.Name
                                    && p.ID != organization.ID
@@ -113,6 +138,12 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organization organization = db.Organizations.Find(id);
+            var userValidation = (int)Session["ID"];
+            if (userValidation != organization.ID)
+            {
+                Session["ID"] = null;
+                return RedirectToAction("Login", "Account");
+            }
             if (organization == null)
             {
                 return HttpNotFound();
