@@ -23,6 +23,16 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Find(id);
+            if (Session["ID"] != null)
+            {
+                var userValidation = (int)Session["ID"];
+                if (userValidation != employee.OrganizationID)
+                {
+                    Session["ID"] = null;
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(employee);
+            }
             if (employee == null)
             {
                 return HttpNotFound();
@@ -61,6 +71,16 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Find(id);
+            if (Session["ID"] != null)
+            {
+                var userValidation = (int)Session["ID"];
+                if (userValidation != id)
+                {
+                    Session["ID"] = null;
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(employee);
+            }
             if (employee == null)
             {
                 return HttpNotFound();

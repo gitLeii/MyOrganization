@@ -1,8 +1,11 @@
-﻿using MyOrganization.DAL;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using MyOrganization.DAL;
 using MyOrganization.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MyOrganization.Controllers
@@ -10,19 +13,34 @@ namespace MyOrganization.Controllers
     [Authorize]
     public class OrganizationController : Controller
     {
+
+        private const string XsrfKey = "XsrfId";
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
         private OrgContext db = new OrgContext();
         // GET: Organization
         public ActionResult Index(int? id)
         {
             Organization organization = db.Organizations.Find(id);
 
-            var userValidation = (int)Session["ID"];
-            if (userValidation != organization.ID)
+            if (Session["ID"] != null)
             {
-                Session["ID"] = null;
-                return RedirectToAction("Login", "Account");
+                var userValidation = (int)Session["ID"];
+                if (userValidation != organization.ID)
+                {
+                    Session["ID"] = null;
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(organization);
             }
-
             return View(organization);
         }
         public ActionResult List()
@@ -38,12 +56,18 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organization organization = db.Organizations.Find(id);
-            var userValidation = (int)Session["ID"];
-            if (userValidation != organization.ID)
+            if (Session["ID"] != null)
             {
-                Session["ID"] = null;
-                return RedirectToAction("Login", "Account");
+                var userValidation = (int)Session["ID"];
+                if (userValidation != organization.ID)
+                {
+                    Session["ID"] = null;
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(organization);
             }
+
 
             if (organization == null)
             {
@@ -70,6 +94,7 @@ namespace MyOrganization.Controllers
                 if (userValidation != organization.ID)
                 {
                     Session["ID"] = null;
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                     return RedirectToAction("Login", "Account");
                 }
                 var checkProfile = from p in db.Organizations

@@ -9,4 +9,19 @@
         public virtual Organization Organization { get; set; }
 
     }
+    public class AssetDetails
+    {
+        public enum ConditionType
+        {
+            New,
+            Good,
+            Damaged,
+            Disposed
+        }
+
+        public string Location { get; set; }
+        public ConditionType Condition { get; set; }
+        public int EmployeeID { get; set; }
+        public virtual Employee Employee { get; set; }
+    }
 }

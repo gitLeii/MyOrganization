@@ -27,6 +27,16 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Asset asset = db.Assets.Find(id);
+            if (Session["ID"] != null)
+            {
+                var userValidation = (int)Session["ID"];
+                if (userValidation != asset.OrganizationID)
+                {
+                    Session["ID"] = null;
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(asset);
+            }
             if (asset == null)
             {
                 return HttpNotFound();
@@ -75,6 +85,16 @@ namespace MyOrganization.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Asset asset = db.Assets.Find(id);
+            if (Session["ID"] != null)
+            {
+                var userValidation = (int)Session["ID"];
+                if (userValidation != asset.OrganizationID)
+                {
+                    Session["ID"] = null;
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(asset);
+            }
             if (asset == null)
             {
                 return HttpNotFound();
